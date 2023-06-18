@@ -55,4 +55,10 @@ public class VisualizePanel extends JPanel {
     public void setRedIndexHighlight(int redIndexHighlight) {
         this.redIndexHighlight = redIndexHighlight;
     }
+
+    public void resetHighlighting() {
+        setGreenIndexHighlight(0);
+        setRedIndexHighlight(-1);
+        repaint();
+    }
 }

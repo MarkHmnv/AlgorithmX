@@ -1,12 +1,11 @@
 package com.algorithmx.button;
 
-import com.algorithmx.interfaces.AlgorithmButton;
 import com.algorithmx.panel.VisualizePanel;
 
 import javax.swing.*;
 import java.util.Random;
 
-public class GenerateArrayButton extends JButton implements AlgorithmButton {
+public class GenerateArrayButton extends JButton {
     private final Random random;
     private final VisualizePanel visualizePanel;
     private static final int BOUNDS = 99;
@@ -15,12 +14,11 @@ public class GenerateArrayButton extends JButton implements AlgorithmButton {
         this.visualizePanel = visualizePanel;
         this.random = new Random();
         this.setText("Generate Array");
-        this.addActionListener(e -> performAlgorithm());
-        performAlgorithm();
+        this.addActionListener(e -> updateArray());
+        updateArray();
     }
 
-    @Override
-    public void performAlgorithm() {
+    public void updateArray() {
         visualizePanel.setArray(fillArray(visualizePanel.getArray()));
         visualizePanel.repaint();
     }
