@@ -4,8 +4,6 @@ import com.algorithmx.interfaces.AlgorithmButton;
 import com.algorithmx.panel.VisualizePanel;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class BubbleSortButton extends JButton implements AlgorithmButton {
     private final VisualizePanel visualizePanel;
@@ -20,39 +18,35 @@ public class BubbleSortButton extends JButton implements AlgorithmButton {
     public void performAlgorithm() {
         setEnabled(false);
         int[] array = visualizePanel.getArray();
-        Timer timer = new Timer(500, null);
-        timer.addActionListener(new ActionListener() {
-            int i = 0;
-            int j = 0;
 
+        SwingWorker<Void, Integer> worker = new SwingWorker<>() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                if (i < array.length - 1) {
-                    visualizePanel.setIndexToHighlight(j);
-                    visualizePanel.repaint();
-                    if (j < array.length - i - 1) {
+            protected Void doInBackground() throws InterruptedException {
+                for(int i = 0; i < array.length - 1; i++) {
+                    for (int j = 0; j < array.length - i - 1; j++) {
+                        visualizePanel.setGreenIndexHighlight(j);
+                        visualizePanel.repaint();
+                        Thread.sleep(500);
                         if (array[j] > array[j + 1]) {
                             swap(array, j, j + 1);
-                            visualizePanel.setArray(array);
-                            visualizePanel.repaint();
                         }
-                        j++;
-                    } else {
-                        i++;
-                        j = 0;
                     }
-                } else {
-                    ((Timer) e.getSource()).stop();
-                    setEnabled(true);
-                    JOptionPane.showMessageDialog(
-                            visualizePanel,
-                            "Algorithm completed",
-                            "Information",
-                            JOptionPane.INFORMATION_MESSAGE);
                 }
+                return null;
             }
-        });
-        timer.start();
+
+            @Override
+            protected void done() {
+                setEnabled(true);
+                JOptionPane.showMessageDialog(
+                        visualizePanel,
+                        "Algorithm completed",
+                        "Information",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+        };
+
+        worker.execute();
     }
 
     private void swap(int[] array, int i, int j) {
