@@ -1,13 +1,18 @@
 package com.algorithmx.panel;
 
 import com.algorithmx.button.BubbleSortButton;
+import com.algorithmx.button.GenerateArrayButton;
+import com.algorithmx.button.SelectionSortButton;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class ControlPanel extends JPanel {
 
     public ControlPanel(VisualizePanel visualizePanel) {
-        add(new BubbleSortButton(visualizePanel), BorderLayout.CENTER);
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        add(new GenerateArrayButton(visualizePanel));
+        add(new BubbleSortButton(visualizePanel));
+        add(new SelectionSortButton(visualizePanel));
     }
 }
