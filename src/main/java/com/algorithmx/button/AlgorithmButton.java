@@ -29,7 +29,7 @@ public abstract class AlgorithmButton extends JButton {
                 Thread.currentThread().interrupt();
             }
         }).thenRun(() -> {
-            controlPanel.setEnabledForAllButtons(false);
+            controlPanel.setEnabledForAllButtons(true);
             JOptionPane.showMessageDialog(
                     visualizePanel,
                     "Algorithm completed",
