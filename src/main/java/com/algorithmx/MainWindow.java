@@ -24,7 +24,7 @@ public class MainWindow extends JFrame {
         mainPanel.add(visualizePanel, BorderLayout.WEST);
         mainPanel.setComponentZOrder(visualizePanel, 0);
         mainPanel.add(controlPanel, BorderLayout.EAST);
-        getContentPane().add(mainPanel);
+        add(mainPanel);
 
         setLocationRelativeTo(null);
         setVisible(true);
