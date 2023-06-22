@@ -2,6 +2,7 @@ package com.algorithmx.panel;
 
 import com.algorithmx.button.sort.BubbleSortButton;
 import com.algorithmx.button.GenerateArrayButton;
+import com.algorithmx.button.sort.InsertionSortButton;
 import com.algorithmx.button.sort.SelectionSortButton;
 
 import javax.swing.*;
@@ -16,7 +17,8 @@ public class ControlPanel extends JPanel {
         buttons = List.of(
                 new GenerateArrayButton(visualizePanel),
                 new BubbleSortButton(visualizePanel),
-                new SelectionSortButton(visualizePanel)
+                new SelectionSortButton(visualizePanel),
+                new InsertionSortButton(visualizePanel)
         );
 
         for (JButton button : buttons) {
