@@ -24,12 +24,12 @@ public abstract class AlgorithmButton extends JButton {
         CompletableFuture.runAsync(() -> {
             try {
                 performAlgorithmWithDelay(array);
-                visualizePanel.resetHighlighting();
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
         }).thenRun(() -> {
             controlPanel.setEnabledForAllButtons(true);
+            visualizePanel.resetHighlighting();
             JOptionPane.showMessageDialog(
                     visualizePanel,
                     "Algorithm completed",
