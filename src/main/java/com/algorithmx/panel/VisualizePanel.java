@@ -2,12 +2,16 @@ package com.algorithmx.panel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VisualizePanel extends JPanel {
     private final static int SIZE = 10;
+    private final static int BOX_WIDTH = 50;
+    private final static int BOX_HEIGHT = 50;
     private int[] array;
-    private int greenIndexHighlight;
-    private int redIndexHighlight = -1;
+    private List<Integer> greenIndexesHighlight;
+    private List<Integer> redIndexesHighlight;
     private Graphics2D g2d;
     private final Font font;
     private Color paintColor;
@@ -16,6 +20,8 @@ public class VisualizePanel extends JPanel {
         setBackground(Color.DARK_GRAY);
         font = new Font("Calibri", Font.ITALIC, 14);
         array = new int[SIZE];
+        greenIndexesHighlight = new ArrayList<>();
+        redIndexesHighlight = new ArrayList<>();
     }
 
     @Override
@@ -26,18 +32,16 @@ public class VisualizePanel extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setFont(font);
 
-        int boxWidth = 50;
-        int boxHeight = 50;
         int x = 10;
         int y = 10;
         for (int i = 0; i < SIZE; i++) {
-            if(i == greenIndexHighlight) paintColor = Color.GREEN;
-            else if(i == redIndexHighlight) paintColor = Color.RED;
-            else paintColor = Color.WHITE;
+            paintColor = Color.WHITE;
+            if(greenIndexesHighlight.contains(i)) paintColor = Color.GREEN;
+            if(redIndexesHighlight.contains(i)) paintColor = Color.RED;
             g2d.setColor(paintColor);
-            g2d.drawRect(x, y, boxWidth, boxHeight);
-            g2d.drawString(String.valueOf(array[i]), x + (boxWidth / 2) - 5, y + (boxHeight / 2) + 5);
-            x += boxWidth;
+            g2d.drawRect(x, y, BOX_WIDTH, BOX_HEIGHT);
+            g2d.drawString(String.valueOf(array[i]), x + (BOX_WIDTH / 2) - 5, y + (BOX_HEIGHT / 2) + 5);
+            x += BOX_WIDTH;
         }
     }
 
@@ -49,16 +53,24 @@ public class VisualizePanel extends JPanel {
         this.array = numbers;
     }
 
-    public void setGreenIndexHighlight(int greenIndexHighlight) {
-        this.greenIndexHighlight = greenIndexHighlight;
+    public void setGreenIndexesHighlight(List<Integer> greenIndexesHighlight) {
+        this.greenIndexesHighlight = greenIndexesHighlight;
     }
-    public void setRedIndexHighlight(int redIndexHighlight) {
-        this.redIndexHighlight = redIndexHighlight;
+    public void setRedIndexesHighlight(List<Integer> redIndexesHighlight) {
+        this.redIndexesHighlight = redIndexesHighlight;
+    }
+
+    public List<Integer> getGreenIndexesHighlight() {
+        return greenIndexesHighlight;
+    }
+
+    public List<Integer> getRedIndexesHighlight() {
+        return redIndexesHighlight;
     }
 
     public void resetHighlighting() {
-        setGreenIndexHighlight(0);
-        setRedIndexHighlight(-1);
+        setGreenIndexesHighlight(new ArrayList<>());
+        setRedIndexesHighlight(new ArrayList<>());
         repaint();
     }
 }
