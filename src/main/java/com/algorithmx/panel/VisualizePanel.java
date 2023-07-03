@@ -3,16 +3,17 @@ package com.algorithmx.panel;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class VisualizePanel extends JPanel {
     private static final int SIZE = 10;
     private static final int BOX_WIDTH = 50;
     private static final int BOX_HEIGHT = 50;
+    private final Map<Integer, Color> indexColorMap;
 
     private int[] array;
-    private List<Integer> greenIndexesHighlight;
-    private List<Integer> redIndexesHighlight;
     private final Font font;
     private Color paintColor;
 
@@ -20,8 +21,7 @@ public class VisualizePanel extends JPanel {
         setBackground(Color.DARK_GRAY);
         font = new Font("Calibri", Font.ITALIC, 14);
         array = new int[SIZE];
-        greenIndexesHighlight = new ArrayList<>();
-        redIndexesHighlight = new ArrayList<>();
+        indexColorMap = new HashMap<>();
     }
 
     @Override
@@ -49,17 +49,30 @@ public class VisualizePanel extends JPanel {
         int textOffsetY = BOX_HEIGHT / 2 + 5;
 
         for (int i = 0; i < SIZE; i++) {
-            paintColor = Color.WHITE;
-            if (greenIndexesHighlight.contains(i))
-                paintColor = Color.GREEN;
-            if (redIndexesHighlight.contains(i))
-                paintColor = Color.RED;
-
+            paintColor = indexColorMap.getOrDefault(i, Color.WHITE);
             g2d.setColor(paintColor);
             g2d.drawRect(x, y, BOX_WIDTH, BOX_HEIGHT);
             g2d.drawString(String.valueOf(array[i]), x + textOffsetX, y + textOffsetY);
             x += BOX_WIDTH;
         }
+    }
+
+
+    public void applyColorForIndex(int index, Color color) {
+        indexColorMap.put(index, color);
+        repaint();
+    }
+
+    public void removeColorForIndex(int j) {
+        indexColorMap.remove(j);
+        repaint();
+    }
+
+    public void applyColorForRange(int start, int end, Color color) {
+        for (int i = start; i < end; i++) {
+            indexColorMap.put(i, color);
+        }
+        repaint();
     }
 
     public int[] getArray() {
@@ -70,24 +83,12 @@ public class VisualizePanel extends JPanel {
         this.array = numbers;
     }
 
-    public void setGreenIndexesHighlight(List<Integer> greenIndexesHighlight) {
-        this.greenIndexesHighlight = greenIndexesHighlight;
-    }
-    public void setRedIndexesHighlight(List<Integer> redIndexesHighlight) {
-        this.redIndexesHighlight = redIndexesHighlight;
-    }
-
-    public List<Integer> getGreenIndexesHighlight() {
-        return greenIndexesHighlight;
-    }
-
-    public List<Integer> getRedIndexesHighlight() {
-        return redIndexesHighlight;
+    public Map<Integer, Color> getIndexColorMap() {
+        return indexColorMap;
     }
 
     public void resetHighlighting() {
-        setGreenIndexesHighlight(new ArrayList<>());
-        setRedIndexesHighlight(new ArrayList<>());
+        indexColorMap.clear();
         repaint();
     }
 
