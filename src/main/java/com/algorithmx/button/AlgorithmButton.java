@@ -9,6 +9,7 @@ import java.util.concurrent.CompletableFuture;
 public abstract class AlgorithmButton extends JButton {
     protected final VisualizePanel visualizePanel;
     private static ControlPanel controlPanel;
+    public static volatile boolean stopFlag;
 
     public AlgorithmButton(VisualizePanel visualizePanel, String text) {
         this.visualizePanel = visualizePanel;
@@ -17,6 +18,7 @@ public abstract class AlgorithmButton extends JButton {
     }
 
     public void onClick() {
+        stopFlag = false;
         initializeControlPanelIfNull();
         controlPanel.setEnabledForAllButtons(false);
         int[] array = visualizePanel.getArray();
@@ -32,7 +34,7 @@ public abstract class AlgorithmButton extends JButton {
             visualizePanel.resetHighlighting();
             JOptionPane.showMessageDialog(
                     visualizePanel,
-                    "Algorithm completed",
+                    stopFlag ? "Algorithm stopped" :"Algorithm completed",
                     "Information",
                     JOptionPane.INFORMATION_MESSAGE);
         });
