@@ -3,8 +3,7 @@ package com.algorithmx.button.sort;
 import com.algorithmx.button.AlgorithmButton;
 import com.algorithmx.panel.VisualizePanel;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.*;
 
 import static com.algorithmx.utils.AlgorithmUtils.swap;
 
@@ -17,20 +16,24 @@ public class SelectionSortButton extends AlgorithmButton {
     protected void performAlgorithmWithDelay(int[] array) throws InterruptedException {
         for (int i = 0; i < array.length - 1; i++) {
             int minIndex = findMinIndex(array, i);
+            if (minIndex == -1) return;
             swap(array, i, minIndex);
-            visualizePanel.getGreenIndexesHighlight().add(i);
+            visualizePanel.applyColorForIndex(i, Color.GREEN);
         }
     }
 
     private int findMinIndex(int[] array, int startIndex) throws InterruptedException {
         int minIndex = startIndex;
         for (int j = startIndex + 1; j < array.length; j++) {
-            visualizePanel.setRedIndexesHighlight(new ArrayList<>(List.of(j)));
-            visualizePanel.repaint();
+            if (stopFlag) return -1;
+
+            visualizePanel.applyColorForIndex(j, Color.RED);
             Thread.sleep(500);
+
             if (array[j] < array[minIndex]) {
                 minIndex = j;
             }
+            visualizePanel.removeColorForIndex(j);
         }
         return minIndex;
     }

@@ -12,13 +12,14 @@ public class MainWindow extends JFrame {
         FlatMacDarkLaf.setup();
         setTitle("AlgorithmX");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 600);
+        setSize(700, 600);
+        setResizable(false);
 
         JPanel mainPanel = new JPanel(new BorderLayout());
         VisualizePanel visualizePanel = new VisualizePanel();
         ControlPanel controlPanel = new ControlPanel(visualizePanel);
 
-        Dimension visualizePanelSize = new Dimension((int) (getWidth() * 0.7), getHeight());
+        Dimension visualizePanelSize = new Dimension((int) (getWidth() * 0.78), getHeight());
         visualizePanel.setPreferredSize(visualizePanelSize);
 
         mainPanel.add(visualizePanel, BorderLayout.WEST);
