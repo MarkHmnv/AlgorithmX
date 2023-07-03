@@ -3,8 +3,7 @@ package com.algorithmx.button.sort;
 import com.algorithmx.button.AlgorithmButton;
 import com.algorithmx.panel.VisualizePanel;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.*;
 
 import static com.algorithmx.utils.AlgorithmUtils.swap;
 
@@ -18,14 +17,15 @@ public class BubbleSortButton extends AlgorithmButton {
         int j;
         for (int i = 0; i < array.length - 1; i++) {
             for (j = 0; j < array.length - i - 1; j++) {
-                visualizePanel.setRedIndexesHighlight(new ArrayList<>(List.of(j)));
-                visualizePanel.repaint();
+                if (stopFlag) return;
+                visualizePanel.applyColorForIndex(j, Color.RED);
                 Thread.sleep(500);
                 if (array[j] > array[j + 1]) {
                     swap(array, j, j + 1);
                 }
+                visualizePanel.removeColorForIndex(j);
             }
-            visualizePanel.getGreenIndexesHighlight().add(j);
+            visualizePanel.applyColorForIndex(j, Color.GREEN);
         }
     }
 }
